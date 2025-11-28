@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: ppkpipelinesjavascriptdocker 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ppkpipelinesjavascriptdocker
+  template:
+    metadata:
+      labels:
+        app: ppkpipelinesjavascriptdocker 
+    spec:
+      containers:
+        - name: ppkpipelinesjavascriptdocker 
+          image: mycontainerregistrypwu39a2.azurecr.io/ppkpipelinesjavascriptdocker
+          ports:
+          - containerPort: 8080
