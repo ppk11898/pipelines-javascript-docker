@@ -21,6 +21,9 @@ variables:
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
+  # ADDED: name of my self-hosted agent pool
+  selfHostedPoolName: 'self-hosted-linux'
+
   # Name of the new namespace being created to deploy the PR changes.
   k8sNamespaceForPR: 'review-app-$(System.PullRequest.PullRequestId)'
 
@@ -55,7 +58,8 @@ stages:
     condition: and(succeeded(), not(startsWith(variables['Build.SourceBranch'], 'refs/pull/')))
     displayName: Deploy
     pool:
-      vmImage: $(vmImageName)
+      # vmImage: $(vmImageName)          # COMMENTED OUT: original Microsoft-hosted
+      name: $(selfHostedPoolName)        # CHANGED: Deploy changes to self-hosted agent pool
     environment: 'ppk11898pipelinesjavascriptdocker.default'
     strategy:
       runOnce:
@@ -84,7 +88,8 @@ stages:
     displayName: Deploy Pull request
     condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/pull/'))
     pool:
-      vmImage: $(vmImageName)
+      # vmImage: $(vmImageName)          # COMMENTED OUT: original Microsoft-hosted
+      name: $(selfHostedPoolName)        # CHANGED: changes to self-hosted agent pool
 
     environment: 'ppk11898pipelinesjavascriptdocker.$(k8sNamespaceForPR)'
     strategy:
