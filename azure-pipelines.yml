@@ -34,7 +34,8 @@ stages:
   - job: Build
     displayName: Build
     pool:
-      vmImage: $(vmImageName)
+      # vmImage: $(vmImageName)          # COMMENTED OUT: original Microsoft-hosted
+      name: $(selfHostedPoolName)        # CHANGED: changes to self-hosted agent pool
     steps:
     - task: Docker@2
       displayName: Build and push an image to container registry
